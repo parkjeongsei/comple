@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>3차 컴플라이언스 이벤트!</title>
+  <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'GmarketSans', sans-serif;
+      background-color: #fff;
+       display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #game-container {
+      position: relative;
+      width: 70vw;
+      height: 70vh;
+      background: url('abcd.PNG') center/cover no-repeat;
+      background-color: #fff;
+      overflow: hidden;
+    }
+    #overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+    .word {
+      position: absolute;
+      font-size: 1.5vw;
+      font-weight: 900;
+      color: #5a3e36;
+      z-index: 2;
+    }
+    #input-area {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 10px;
+      text-align: center;
+      display: none;
+      z-index: 3;
+    }
+    #word-input {
+      font-size: 1.2vw;
+      width: 60%;
+      height: 40px;
+      border: 2px solid #e0c3cc;
+      border-radius: 8px;
+      padding: 5px;
+    }
+    #start-screen {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+   #start-button, #restart-btn {
+      padding: 14px 30px; font-size: 1.3vw; font-weight: bold; background: linear-gradient(to bottom, #ffd6e1, #fbb0c7); border: 2px solid #d36c8d; border-radius: 12px; box-shadow: 0 4px #b85274; color: #5a3e36; cursor: pointer; transition: all 0.15s ease-in-out;
+    }
+    #restart-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: none;
+      z-index: 4;
+    }
+
+    #input-area {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px;
+      text-align: center;
+      display: none;
+      z-index: 3;
+    }
+    #word-input {
+      font-size: 1.2vw;
+      width: 60%;
+      height: 40px;
+      font-family: 'GmarketSans', sans-serif;
+      border: 2px solid #e0c3cc;
+      border-radius: 8px;
+      padding: 5px;
+    }
+      #complete {
+position: absolute;
+top: 35%;
+left: 50%;
+transform: translateX(-50%) scale(0.5);
+background: #ffe0ec;
+border: 2px solid #ffb6c1;
+padding: 30px;
+border-radius: 16px;
+font-size: 1.6vw;
+display: none;
+z-index: 4;
+color: #5a3e36;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+max-width: 60%;
+text-align: center;
+animation: popupBubble 0.5s ease-out forwards;
+}
+
+#complete::after {
+content: '';
+position: absolute;
+bottom: -20px;
+left: 50%;
+transform: translateX(-50%);
+width: 0;
+height: 0;
+border-left: 20px solid transparent;
+border-right: 20px solid transparent;
+border-top: 20px solid #ffe0ec;
+}
+
+@keyframes popupBubble {
+0% {
+opacity: 0;
+transform: translateX(-50%) scale(0.3);
+}
+100% {
+opacity: 1;
+transform: translateX(-50%) scale(1);
+}
+}
+
+    #top-left-text {
+      position: fixed;
+      top: 90px;
+      left: 280px;
+      font-size: 1.4vw;
+      font-weight: bold;
+      color: #255;
+      background: rgba(255,255,255,0.8);
+      padding: 8px 14px;
+      border-radius: 10px;
+      z-index: 10;
+    }
+    #bottom-right-text {
+      position: relative;
+      bottom: 16px;
+      right: 20px;
+      font-size: 1vw;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      padding: 6px 12px;
+      border-radius: 10px;
+      z-index: 10;
+    }
+
+    .petal {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      background: url('https://cdn-icons-png.flaticon.com/512/6975/6975035.png') no-repeat center/contain;
+      animation: scatter 1s ease-out forwards;
+      pointer-events: none;
+      z-index: 999;
+    }
+    @keyframes scatter {
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.5); }
+    }
+#timer {
+  position: fixed;
+  bottom: 160px;
+  left: 290px;
+  font-size: 1.2vw;
+  font-weight: bold;
+  background: rgba(255,255,255,0.8);
+  padding: 6px 12px;
+  border-radius: 10px;
+  z-index: 10;
+}
+  </style>
+</head>
+<body>
+
+  <div id="top-left-text">3차 컴플라이언스 이벤트!</div>
+
+  <div id="game-container">
+    <div id="overlay"></div><div id="start-screen">
+  <button id="start-button">Game Start!</button>
+</div>
+
+<button id="restart-btn">Restart!</button>
+
+<div id="timer">00.00초</div>
+
+<div id="input-area">
+  <input type="text" id="word-input" placeholder="단어를 입력하세요" autofocus />
+</div>
+
+<div id="complete"></div>
+
+  </div><audio id="success-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b8fbe09726.mp3?filename=success-1-6297.mp3"></audio> <audio id="fail-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1876653cb1.mp3?filename=failure-drum-3-6816.mp3"></audio>
+
+  <script>
+       const baseWords = ["하도급", "원사업자", "수급사업자", "하도급대금 연동제", "하도급 계약서", "하도급대금", "주요 원재료", "쪼개기 계약 금지", "입찰참가자격 제한", "법정 지급기일 준수", "하도급대금 지급보증", "기술자료요구서 제공", "비밀유지계약 체결", "원가", "징벌적 손해배상책임", "하도급법 준수", "작업지시서 발급", "부당특약 설정 금지", "인테그리티", "Integrity", "벚꽃놀이", "자율활동", "협력사", "하도급법", "과징금", "공정위 제재", "벚꽃타이핑", "기명날인 필수", "서면발급의무", "Compliance"];
+
+    const shuffledWords = baseWords.sort(() => 0.5 - Math.random()).slice(0, 25);
+
+    const container = document.getElementById("game-container");
+    const startBtn = document.getElementById("start-button");
+    const restartBtn = document.getElementById("restart-btn");
+    const startScreen = document.getElementById("start-screen");
+    const inputArea = document.getElementById("input-area");
+    const inputBox = document.getElementById("word-input");
+    const completeBox = document.getElementById("complete");
+
+    let fallingWords = [];
+    let timerInterval, dropInterval, startTime;
+     let totalWords = 25;
+    let typedCount = 0;
+    let gameEnded=false;
+
+    function createWord(word) {
+    if (gameEnded) return;
+      const div = document.createElement("div");
+      div.className = "word";
+      div.textContent = word;
+      div.style.left = Math.random() * 80 + "%";
+      div.style.top = "0px";
+      container.appendChild(div);
+      fallingWords.push({ word, element: div, y: 0 });
+    }
+
+    function dropWords() {
+      dropInterval = setInterval(() => {
+        for (let fw of fallingWords) {
+          fw.y += 1.5;
+          fw.element.style.top = fw.y + "px";
+          if (fw.y > container.offsetHeight - 60) {
+            fw.element.style.color = "gray";
+            endGame("아쉽게 실패했네요!<br>다시 도전하세요!", false);
+          }
+        }
+      }, 30);
+    }
+
+      function checkInput(input) {
+      for (let i = 0; i < fallingWords.length; i++) {
+        if (fallingWords[i].word === input.trim()) {
+          container.removeChild(fallingWords[i].element);
+          fallingWords.splice(i, 1);
+          typedCount++;
+
+          if (typedCount === totalWords) {
+            const time = ((Date.now() - startTime) / 2000).toFixed(2);
+            endGame(`게임 완료!<br>기록: <strong>${time}초</strong>`, true);
+          }
+          break;
+        }
+      }
+    }
+
+    function endGame(message, isSuccess) {
+  gameEnded = true;
+  clearInterval(dropInterval);
+  clearInterval(timerInterval);  // ← 타이머 정지
+  completeBox.innerHTML = `<p>${message}</p>`;
+  completeBox.style.display = "block";
+  document.getElementById(isSuccess ? "success-sound" : "fail-sound").play();
+}
+
+    function startGame() {
+      startScreen.style.display = "none";
+      startBtn.style.display = "none";
+      restartBtn.style.display = "block";
+      inputArea.style.display = "block";
+      fallingWords = [];
+      typedCount =0;
+
+      shuffledWords.forEach((w, i) => {
+  setTimeout(() => {
+    if (!gameEnded) createWord(w);
+        }, i * 1500);
+       });
+      setTimeout(() => dropWords(), 1000);
+      startTime = Date.now();
+timerInterval = setInterval(() => {
+  const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+  document.getElementById("timer").innerText = `${elapsed}초`;
+}, 100);
+
+    }
+
+    startBtn.addEventListener("click", startGame);
+    restartBtn.addEventListener("click", () => location.reload());
+    inputBox.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        checkInput(inputBox.value);
+        inputBox.value = "";
+      }
+    });
+  </script></body>
+</html>
